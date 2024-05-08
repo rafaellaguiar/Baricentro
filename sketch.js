@@ -31,7 +31,7 @@ function draw() {
     strokeWeight(4);
     fill(236, 1, 90, 25);
     
-    circumcircle([a, b, c, d]);
+    calcBaricentro([a, b, c, d]);
   }
 
   strokeWeight(16);
@@ -40,10 +40,6 @@ function draw() {
   for (let p of points) {
     point(p.x, p.y);
   }
-}
-
-function circumcircle(vertices) {
-  calcBaricentro(vertices, calcArea(vertices))
 }
 
 function calcArea(vertices) {
@@ -56,7 +52,8 @@ function calcArea(vertices) {
   return soma / 2
 }
 
-function calcBaricentro(vertices, area) {
+function calcBaricentro(vertices) {
+  let area = calcArea(vertices)
   baricentro = createVector(calcBariX(vertices, area), calcBariY(vertices, area))
   
   strokeWeight(16);
