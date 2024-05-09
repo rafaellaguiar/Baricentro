@@ -4,7 +4,7 @@ let baricentro
 let ladosPol = 4
 
 function setup() {
-  createCanvas(640, 360);
+  createCanvas(640, 640);
 }
 
 function mousePressed() {
@@ -22,9 +22,9 @@ function draw() {
   if (points.length == ladosPol) {
     strokeWeight(2);
     beginShape();
-    for (let i = 0; i < ladosPol; i++) {
-      vertex(points[i].x, points[i].y)
-    }
+      for (let i = 0; i < ladosPol; i++) {
+        vertex(points[i].x, points[i].y)
+      }
     endShape(CLOSE);
     stroke(236, 1, 90);
     strokeWeight(4);
@@ -45,11 +45,11 @@ function calcArea(vertices) {
   let soma = 0
   let verticeXProx = 0
   let verticeY = 0
-  for (let i = 0; i < 4; i ++) {
+  for (let i = 0; i < ladosPol; i ++) {
     let verticeX = vertices[i].x
     let verticeY = vertices[i].y
       
-    if(i == vertices.length - 1) {
+    if(i == ladosPol - 1) {
       verticeXProx = verticeX
       verticeYProx = verticeY
     } else {
@@ -64,7 +64,7 @@ function calcArea(vertices) {
 
 function calcBaricentro(vertices) {
   let area = calcArea(vertices)
-  baricentro = createVector(calcBariX(vertices, area), calcBariY(vertices, area))
+  baricentro = createVector(floor(calcBariX(vertices, area)), floor(calcBariY(vertices, area)))
   
   strokeWeight(16);
   stroke(112, 50, 126)
@@ -78,11 +78,11 @@ function calcBariX(vertices, area) {
   let verticeXProx = 0
   let verticeYProx = 0
   
-  for (let i = 0; i < 4; i ++) {
+  for (let i = 0; i < ladosPol; i ++) {
       let verticeX = vertices[i].x
       let verticeY = vertices[i].y
       
-      if(i == vertices.length - 1) {
+      if(i == ladosPol - 1) {
         verticeXProx = verticeX
         verticeYProx = verticeY
       } else {
@@ -103,11 +103,11 @@ function calcBariY(vertices, area) {
   let verticeXProx = 0
   let verticeYProx = 0
   
-  for (let i = 0; i < 4; i ++) {
+  for (let i = 0; i < ladosPol; i ++) {
       let verticeX = vertices[i].x
       let verticeY = vertices[i].y
       
-      if(i == vertices.length - 1) {
+      if(i == ladosPol - 1) {
         verticeXProx = verticeX
         verticeYProx = verticeY
       } else {
