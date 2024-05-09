@@ -1,12 +1,14 @@
 let points = [];
-let verticeX, verticeY, verticeXProx, verticeYProx
 let baricentro
+
+let ladosPol = 4
+
 function setup() {
   createCanvas(640, 360);
 }
 
 function mousePressed() {
-  if (points.length == 4) {
+  if (points.length == ladosPol) {
     points = [];
   }
 
@@ -17,21 +19,18 @@ function draw() {
   background(255);
   noFill();
 
-  if (points.length == 4) {
-    let [a, b, c, d] = points;
-
+  if (points.length == ladosPol) {
     strokeWeight(2);
     beginShape();
-    vertex(a.x, a.y);
-    vertex(b.x, b.y);
-    vertex(c.x, c.y);
-    vertex(d.x, d.y);
+    for (let i = 0; i < ladosPol; i++) {
+      vertex(points[i].x, points[i].y)
+    }
     endShape(CLOSE);
     stroke(236, 1, 90);
     strokeWeight(4);
     fill(236, 1, 90, 25);
     
-    calcBaricentro([a, b, c, d]);
+    calcBaricentro(points);
   }
 
   strokeWeight(16);
@@ -44,11 +43,22 @@ function draw() {
 
 function calcArea(vertices) {
   let soma = 0
-  for (let i = 0; i < 3; i ++) {
-    soma = soma + (vertices[i].x * vertices[i+1].y) - (vertices[i].y * vertices[i + 1].x)
+  let verticeXProx = 0
+  let verticeY = 0
+  for (let i = 0; i < 4; i ++) {
+    let verticeX = vertices[i].x
+    let verticeY = vertices[i].y
+      
+    if(i == vertices.length - 1) {
+      verticeXProx = verticeX
+      verticeYProx = verticeY
+    } else {
+      verticeXProx = vertices[i + 1].x
+      verticeYProx = vertices[i + 1].y
+    }
+    soma = soma + (verticeX * verticeYProx) - (verticeY * verticeXProx)
   }
   
-  soma = soma + (vertices[3].x * vertices[0].y - (vertices[3].y * vertices[0].x))
   return soma / 2
 }
 
@@ -65,10 +75,13 @@ function calcBaricentro(vertices) {
 function calcBariX(vertices, area) {
   let somaAuxX = 0
   let somaBariX = 0
+  let verticeXProx = 0
+  let verticeYProx = 0
+  
   for (let i = 0; i < 4; i ++) {
-      verticeX = vertices[i].x
-      verticeY = vertices[i].y
-    
+      let verticeX = vertices[i].x
+      let verticeY = vertices[i].y
+      
       if(i == vertices.length - 1) {
         verticeXProx = verticeX
         verticeYProx = verticeY
@@ -87,11 +100,13 @@ function calcBariX(vertices, area) {
 function calcBariY(vertices, area) {
   let somaAuxY = 0
   let somaBariY = 0
+  let verticeXProx = 0
+  let verticeYProx = 0
   
   for (let i = 0; i < 4; i ++) {
-      verticeX = vertices[i].x
-      verticeY = vertices[i].y
-    
+      let verticeX = vertices[i].x
+      let verticeY = vertices[i].y
+      
       if(i == vertices.length - 1) {
         verticeXProx = verticeX
         verticeYProx = verticeY
